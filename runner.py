@@ -1,5 +1,5 @@
 import json
-import  coverage
+import  coverage # Keeping this here just in case!
 from problems.Add_two_numbers.add_two_numbers_correct import Solution as RefSolution
 from problems.Add_two_numbers.bug1 import Solution as BugSolution
 
@@ -57,23 +57,27 @@ def run_solution(SolutionClass, tests, file_path):
     return results
 
 
-
-def compute_suspiciousness(results, total_passed, total_failed):
+# def compute_suspiciousness(results, total_passed, total_failed):
+def compute_suspiciousness(results, total_failed):
     suspiciousness = {}
-    # get all lines executed in any test
+
+    # all lines executed at least once
     all_lines = set(line for r in results for line in r['executed_lines'])
+
     for line in all_lines:
         ef = sum(1 for r in results if not r['passed'] and line in r['executed_lines'])
         ep = sum(1 for r in results if r['passed'] and line in r['executed_lines'])
-        nf = total_failed - ef
-        np = total_passed - ep
-        
-        # Tarantula formula
-        if ef + nf == 0 or ep + np == 0:
-            score = 0
+
+        # Ochiai denominator
+        denom = ((ef + ep) * total_failed) ** 0.5
+
+        if denom == 0:
+            score = 0.0
         else:
-            score = (ef / (ef + nf)) / ((ef / (ef + nf)) + (ep / (ep + np)))
+            score = ef / denom
+
         suspiciousness[line] = score
+
     return suspiciousness
 
 
@@ -97,7 +101,7 @@ total_passed = sum(r['passed'] for r in bug_results)
 total_failed = len(bug_results) - total_passed
 
 # Compute suspiciousness
-susp_scores = compute_suspiciousness(bug_results, total_passed, total_failed)
+susp_scores = compute_suspiciousness(bug_results, total_failed)
 
 # Rank lines by suspiciousness
 sorted_lines = sorted(susp_scores.items(), key=lambda x: x[1], reverse=True)

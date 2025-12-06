@@ -50,5 +50,25 @@ We created 4 bugs, each showign a realistic bug type
             else:
                 out = val1 + val2 + carry
 
-**Bug 3 - Incorrect Digit Normalization
+**Bug 3 - While Loop Termination Error**
+
+\# BUG: while loop changed from l2 or l2 or carry to l1 and l2
+
+        while l1 and l2:
+
+**Bug 4 - Infinite Loop Due to Node Advancement Error**
+
+\# BUG: infinitive loop because l1 is not l1.next
+
+        l1 = l1 if l1 else None
+
+## Running the Projects
+
+1. Install Dependencies
+
+        pip install coverage
+
+3. Run the runner script
+
+         python runner.py
 

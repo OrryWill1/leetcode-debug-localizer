@@ -29,7 +29,8 @@ def run_solution(SolutionClass, tests, file_path):
     results = []
 
     for test in tests:
-        cov = coverage.Coverage(include=[file_path])  # only track this file
+        # cov = coverage.Coverage(include=[file_path])  # only track this file
+        cov = coverage.Coverage(include=[file_path], branch=True)
         cov.start()
 
         l1 = array_to_list(test["l1"])

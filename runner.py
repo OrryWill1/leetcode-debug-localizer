@@ -29,7 +29,7 @@ def run_solution(SolutionClass, tests, file_path):
     results = []
 
     for test in tests:
-        cov = coverage.Coverage()  # new object per test
+        cov = coverage.Coverage(include=[file_path])  # only track this file
         cov.start()
 
         l1 = array_to_list(test["l1"])
@@ -45,7 +45,6 @@ def run_solution(SolutionClass, tests, file_path):
         output_array = list_to_array(output)
         passed = output_array == expected
 
-        # Get executed lines for this test only
         _, _, executed_lines, _ = cov.analysis(file_path)
 
         results.append({
@@ -55,6 +54,8 @@ def run_solution(SolutionClass, tests, file_path):
         })
 
     return results
+
+
 
 
 # def compute_suspiciousness(results, total_passed, total_failed):
@@ -82,16 +83,16 @@ def compute_suspiciousness(results, total_failed):
 
 
 # Load test cases
-with open("problems/add_two_numbers/tests.json") as f:
+with open("problems/Add_two_numbers/tests.json") as f:
     tests = json.load(f)
 
 # Run tests
 print("Running ref.py (correct solution)...")
-ref_results = run_solution(RefSolution, tests, 'problems/add_two_numbers/add_two_numbers_correct.py')
+ref_results = run_solution(RefSolution, tests, 'problems/Add_two_numbers/add_two_numbers_correct.py')
 print(ref_results)
 
 print("\nRunning bug1.py (buggy solution)...")
-bug_results = run_solution(BugSolution, tests, 'problems/add_two_numbers/bug1.py')
+bug_results = run_solution(BugSolution, tests, 'problems/Add_two_numbers/bug1.py')
 print(bug_results)
 
 

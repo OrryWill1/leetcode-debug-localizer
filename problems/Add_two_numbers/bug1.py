@@ -1,10 +1,10 @@
-# bug_branch.py
-class ListNode:
+# bug1.py
+class ListNode(object):
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
 
-class Solution:
+class Solution(object):
     def addTwoNumbers(self, l1, l2):
         dummy = ListNode()
         current = dummy
@@ -14,9 +14,11 @@ class Solution:
             val1 = l1.val if l1 else 0
             val2 = l2.val if l2 else 0
 
-            # BUG: only multiply val1 if it's > 5 (incorrect logic)
+            # BUG: Only multiply val1 if > 5
             if val1 > 5:
-                out = val1 * 2 + val2 + carry  # buggy branch
+                out = val1 * 2        # <-- now on a separate line
+                out += val2            # <-- separate
+                out += carry           # <-- separate
             else:
                 out = val1 + val2 + carry
 
@@ -29,3 +31,4 @@ class Solution:
             l2 = l2.next if l2 else None
 
         return dummy.next
+

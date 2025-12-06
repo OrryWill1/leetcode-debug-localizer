@@ -3,7 +3,7 @@ import json
 import os
 
 import problems.Add_two_numbers.add_two_numbers_correct as correct_module
-import problems.Add_two_numbers.bug1 as buggy_module
+import problems.Add_two_numbers.bug1 as buggy_module #Change this to bug2 to test the other bug
 
 RefSolution = correct_module.Solution
 BugSolution = buggy_module.Solution
@@ -92,6 +92,7 @@ with open("problems/Add_two_numbers/tests.json") as f:
 
 correct_file = os.path.abspath("problems/Add_two_numbers/add_two_numbers_correct.py")
 buggy_file   = os.path.abspath("problems/Add_two_numbers/bug1.py")
+buggy_filetwo = os.path.abspath("problems/Add_two_numbers/bug2.py")
 
 print("Running CORRECT solution...")
 ref_results = run_solution(
@@ -108,7 +109,16 @@ bug_results = run_solution(
     tests,
     buggy_file
 )
-
+"""
+# I can't figure out how to get this to work with two buggy files at once...
+print("\nRunning SECOND BUGGY solution...")
+bug_results_two = run_solution(
+    BugSolution,
+    buggy_module.ListNode,
+    tests,
+    buggy_filetwo
+)
+"""
 susp_scores, all_lines, total_failed = compute_suspiciousness_ochiai(bug_results)
 
 print(f"\nFAILED TESTS: {total_failed}/{len(bug_results)}")

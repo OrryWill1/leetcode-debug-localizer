@@ -135,6 +135,18 @@ if __name__ == "__main__":
         correct_file
     )
 
+    susp_scores, all_lines, total_failed = compute_suspiciousness_ochiai(ref_results)
+
+    print(f"\nFAILED TESTS: {total_failed}/{len(ref_results)}")
+    print("\n=== Suspiciousness ===")
+    for line in sorted(all_lines):
+        print(f"Line {line:3d}: {susp_scores.get(line, 0):.2f}")
+
+    print("\n=== Ranked (Most Suspicious First) ===")
+    ranked = sorted(susp_scores.items(), key=lambda x: x[1], reverse=True)
+    for line, score in ranked:
+        print(f"Line {line:3d}: {score:.2f}")
+
     print("\nRunning BUGGY solution...")
     bug_results = run_solution(
         BugSolution,
@@ -146,7 +158,7 @@ if __name__ == "__main__":
     susp_scores, all_lines, total_failed = compute_suspiciousness_ochiai(bug_results)
 
     print(f"\nFAILED TESTS: {total_failed}/{len(bug_results)}")
-    print("\n=== Suspiciousness (Ochiai) ===")
+    print("\n=== Suspiciousness ===")
     for line in sorted(all_lines):
         print(f"Line {line:3d}: {susp_scores.get(line, 0):.2f}")
 

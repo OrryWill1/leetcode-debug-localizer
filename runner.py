@@ -124,8 +124,12 @@ if __name__ == "__main__":
     with open("problems/Add_two_numbers/tests.json") as f:
         tests = json.load(f)
 
+
     correct_file = os.path.abspath("problems/Add_two_numbers/add_two_numbers_correct.py")
-    buggy_file = os.path.abspath("problems/Add_two_numbers/bug1.py") # Change this to bugX to test the other bug, with X being the number
+    buggy_file   = os.path.abspath("problems/Add_two_numbers/bug1.py")
+    buggy_filetwo = os.path.abspath("problems/Add_two_numbers/bug2.py")
+    buggy_filethree = os.path.abspath("problems/Add_two_numbers/bug3.py")
+    buggy_filefour = os.path.abspath("problems/Add_two_numbers/bug4.py")
 
     print("Running CORRECT solution...")
     ref_results = run_solution(
